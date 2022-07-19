@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect} from 'react';
+import {useDispatch} from "react-redux";
+import {useTypedSelector} from "./hooks/useTypedSelector";
+import {setUsers} from "./store/users/users-actions";
+import {setTodos} from "./store/todos/todos-actions";
 
-function App() {
+const App = () => {
+  const dispatch = useDispatch()
+  const {users} = useTypedSelector(state => state.users)
+  const {todos} = useTypedSelector(state => state.todos)
+
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(setUsers())
+
+    // @ts-ignore
+    dispatch(setTodos())
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      users: {users.length}
+      todos: {todos.length}
     </div>
   );
-}
+};
 
 export default App;
